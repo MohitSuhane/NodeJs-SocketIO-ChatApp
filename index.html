@@ -27,19 +27,27 @@
         $('#m').val('');
         return false;
       });
+
+      // listening to chat message event.
       socket.on('chat message', function(msg){
         $('#messages').append($('<li>').text(msg));
       });
+
+      // listening to connect event.
       socket.on('connect',function(data){
         $('#status').html('Connected to chat');
         nickname = prompt("What is you nickname");
 
         socket.emit('join',nickname);
       });
+
+      // listening to add chatter event.
       socket.on('add chatter', function(name){
         var chatter = $('<li id='+ name +'>' + name+ '</li>').data('name', name);
         $('#chatter').append(chatter);
       });
+
+      // listening to remove chatter event.
       socket.on('remove chatter', function(name){
         $('#chatter li[id='+ name + ']').remove();
       })

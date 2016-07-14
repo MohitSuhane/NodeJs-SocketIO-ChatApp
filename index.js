@@ -26,12 +26,16 @@ var storeMessage = function(name, data) {
 	});
 }
 
+// listening to io connection event.
 io.on('connection', function(socket){
+	// listening to chat message event on the active socket.
   socket.on('chat message', function(msg){
   	var nickname = socket.nickname;
     io.emit('chat message', nickname + ":" + msg);
     storeMessage(nickname,msg);
   });
+
+  // listening to join event on the active socket, this is triggered when any new user enter the chat app.
   socket.on('join', function(name){
 
   	// Add a new chatter to the chatters set
@@ -57,9 +61,11 @@ io.on('connection', function(socket){
   		});  		
   	});
 
-  	//When the socket gets disconnected remove the chatter from the chatters list
+  	// listening to disconnect event on the active socket.
+  	
   	socket.on('disconnect', function(name){
   		io.emit("remove chatter", socket.nickname);
+  		//When the socket gets disconnected remove the chatter from the chatters list
   		redisClient.srem("chatters", socket.nickname);
   	});
 
