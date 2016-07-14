@@ -6,12 +6,12 @@
   <body>
     <h2 class="header">Welcome to Chatter App</h2>
     <div class="container">
-      <div id="box1">
-        <ul id="messages"></ul>
+      <div class="box1">
+        <ul class="messages"></ul>
       </div>
-      <div id="box2">
+      <div class="box2">
         <label class="list">List on person's online</label>
-        <ul id="chatter">
+        <ul class="chatter">
       </div>
     </div>
     <form action="">
@@ -30,7 +30,7 @@
 
       // listening to chat message event.
       socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(msg));
+        $('.messages').append($('<li>').text(msg));
       });
 
       // listening to connect event.
@@ -44,12 +44,12 @@
       // listening to add chatter event.
       socket.on('add chatter', function(name){
         var chatter = $('<li id='+ name +'>' + name+ '</li>').data('name', name);
-        $('#chatter').append(chatter);
+        $('.chatter').append(chatter);
       });
 
       // listening to remove chatter event.
       socket.on('remove chatter', function(name){
-        $('#chatter li[id='+ name + ']').remove();
+        $('.chatter li[id='+ name + ']').remove();
       })
     </script>
   </body>
