@@ -2,24 +2,24 @@
 <html>
   <head>
     <title>Socket.IO chat</title>
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
-    </style>
   </head>
   <body>
-    <ul id="messages"></ul>
+    <h2 class="header">Welcome to Chatter App</h2>
+    <div class="container">
+      <div id="box1">
+        <ul id="messages"></ul>
+      </div>
+      <div id="box2">
+        <label class="list">List on person's online</label>
+        <ul id="chatter">
+      </div>
+    </div>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <link rel="stylesheet" href="css/style.css">
     <script>
       var socket = io();
       $('form').submit(function(){
@@ -35,6 +35,13 @@
         nickname = prompt("What is you nickname");
 
         socket.emit('join',nickname);
+      });
+      socket.on('add chatter', function(name){
+        var chatter = $('<li id='+ name +'>' + name+ '</li>').data('name', name);
+        $('#chatter').append(chatter);
+      });
+      socket.on('remove chatter', function(name){
+        $('#chatter li[id='+ name + ']').remove();
       })
     </script>
   </body>
